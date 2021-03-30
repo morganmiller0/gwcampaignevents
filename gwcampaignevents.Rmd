@@ -1,0 +1,46 @@
+---
+title: "Campaign Events Analysis"
+author: "Morgan Miller"
+date: "3/30/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+
+events <- readRDS("events_saved.rds")
+
+events
+
+```
+
+## Intro
+
+```{r}
+##states most visited by each
+
+Kamala_states <- filter(events, cand_lastname == "Harris")%>%
+    count(state)
+
+Bernie_states <- filter(events, cand_lastname == "Sanders")%>%
+    count(state)
+
+Biden_states <- filter(events, cand_lastname == "Biden")%>%
+    count(state)
+
+##cities most visited by each
+
+Biden_cities <- filter(events, cand_lastname == "Biden")%>%
+    count(city)
+
+Bernie_cities <- filter(events, cand_lastname == "Sanders")%>%
+    count(city)
+  
+Kamala_cities <- filter(events, cand_lastname == "Harris")%>%
+    count(city)
+
+
+```
+
