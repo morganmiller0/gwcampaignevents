@@ -1,0 +1,84 @@
+---
+title: "Campaign Events"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(lubridate)
+library(plotly)
+
+events <- readRDS("events_saved.rds")
+
+events_month <- events%>%
+  mutate(month(date))
+  
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Kamala Trips By Month
+
+```{r}
+Kamala_months <- events_month%>%
+  filter(cand_lastname == "Harris")%>%
+  count(month = month(date))
+
+Harris_Chart <- Kamala_months%>%
+  plot_ly(x = ~month,
+          y = ~n, 
+          type = "bar")
+
+harris_graph <- Harris_Chart%>%
+  layout(title = "Visits for Harris per Month")
+
+harris_graph
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Biden Trips By Month
+
+```{r}
+Biden_months <- events_month%>%
+  filter(cand_lastname == "Biden")%>%
+  count(month = month(date))
+
+Biden_Chart <- Biden_months%>%
+  plot_ly(x = ~month,
+          y = ~n, 
+          type = "bar")
+
+biden_graph <- Biden_Chart%>%
+  layout(title = "Visits for Biden per Month")
+
+biden_graph
+
+```
+
+### Sanders Trips By Month
+
+```{r}
+Sanders_months <- events_month%>%
+  filter(cand_lastname == "Sanders")%>%
+  count(month = month(date))
+
+Sanders_Chart <- Sanders_months%>%
+  plot_ly(x = ~month,
+          y = ~n, 
+          type = "bar")
+
+sanders_graph <- Sanders_Chart%>%
+  layout(title = "Visits for Sanders per Month")
+
+sanders_graph
+
+```
+

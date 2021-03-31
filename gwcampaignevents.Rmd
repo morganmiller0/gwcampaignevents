@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(lubridate)
+library(plotly)
 
 events <- readRDS("events_saved.rds")
 
@@ -48,18 +49,47 @@ events_month <- events%>%
   
 Kamala_months <- events_month%>%
   filter(cand_lastname == "Harris")%>%
-  group_by(month(date))%>%
-  count(month(date))
+  count(month = month(date))
 
 Biden_months <- events_month%>%
-  filter(cand_lastname == "biden")%>%
-  group_by(month(date))%>%
-  count(month(date))
+  filter(cand_lastname == "Biden")%>%
+  count(month = month(date))
 
 Sanders_months <- events_month%>%
   filter(cand_lastname == "Sanders")%>%
-  group_by(month(date))%>%
-  count(month(date))
+  count(month = month(date))
+
+##Charts based on months
+
+Harris_Chart <- Kamala_months%>%
+  plot_ly(x = ~month,
+          y = ~n, 
+          type = "bar")
+
+harris_graph <- Harris_Chart%>%
+  layout(title = "Visits for Harris per Month")
+
+Biden_Chart <- Biden_months%>%
+  plot_ly(x = ~month,
+          y = ~n, 
+          type = "bar")
+
+biden_graph <- Biden_Chart%>%
+  layout(title = "Visits for Biden per Month")
+
+Sanders_Chart <- Sanders_months%>%
+  plot_ly(x = ~month,
+          y = ~n, 
+          type = "bar")
+
+sanders_graph <- Sanders_Chart%>%
+  layout(title = "Visits for Sanders per Month")
+
+Harris_Chart
+Biden_Chart
+Sanders_Chart
+
+harris_graph
 
 ```
 
