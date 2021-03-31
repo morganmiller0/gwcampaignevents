@@ -41,6 +41,25 @@ Bernie_cities <- filter(events, cand_lastname == "Sanders")%>%
 Kamala_cities <- filter(events, cand_lastname == "Harris")%>%
     count(city)
 
+##popular months for events by candidates
+
+events_month <- events%>%
+  mutate(month(date))
+  
+Kamala_months <- events_month%>%
+  filter(cand_lastname == "Harris")%>%
+  group_by(month(date))%>%
+  count(month(date))
+
+Biden_months <- events_month%>%
+  filter(cand_lastname == "biden")%>%
+  group_by(month(date))%>%
+  count(month(date))
+
+Sanders_months <- events_month%>%
+  filter(cand_lastname == "Sanders")%>%
+  group_by(month(date))%>%
+  count(month(date))
 
 ```
 
